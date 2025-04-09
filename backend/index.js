@@ -1,6 +1,7 @@
 // index.js
 const express = require('express');
 const tableRoutes = require('./routes/tables');
+const viewRoutes = require('./routes/views');
 const procedureRoutes = require('./routes/procedures');
 const db = require('./db');
 
@@ -10,6 +11,7 @@ const PORT = 3000;
 app.use(express.json());
 app.use('/tables', tableRoutes);
 app.use('/procedures', procedureRoutes);
+app.use('/views', viewRoutes);
 
 // Test DB connection before starting server
 async function startServer() {

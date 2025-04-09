@@ -1,7 +1,6 @@
-// procedures.js
 const express = require('express');
 const router = express.Router();
-const db = require('../db'); // Adjust the path to your db connection module
+const db = require('../db'); 
 
 // 1
 router.post('/add_airplane', async (req, res) => {
