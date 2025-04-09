@@ -1,0 +1,58 @@
+/* Main container for flights data */
+.flights-container {
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 1200px;
+    background-color: #f4f7fc;
+}
+
+/* Header styles */
+.flights-container h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Table styles */
+.flights-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Table header styles */
+.flights-table th {
+    background-color: #007BFF;
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: bold;
+}
+
+/* Table row styles */
+.flights-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+    background-color: #fff;
+}
+
+/* Hover effect for table rows */
+.flights-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Loading and error message styles */
+.loading, .error {
+    font-size: 1.5rem;
+    text-align: center;
+    color: #888;
+    margin-top: 20px;
+}
+
+/* Error message specific styles */
+.error {
+    color: #e74c3c;
+}

@@ -1,0 +1,30 @@
+.navbar {
+    width: 100%; /* Full width */
+    height: 60px; /* Set a height for the navbar */
+    background-color: #333; /* Dark background color */
+    display: flex; /* Use flexbox for centering content */
+    justify-content: center; /* Horizontally center the content */
+    align-items: center; /* Vertically center the content */
+    cursor: pointer; /* Indicate that the navbar is clickable */
+    color: white; /* Text color */
+    font-family: 'Arial', sans-serif; /* Font for the navbar */
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.navbar h1 {
+    margin: 0; /* Remove default margin */
+    font-size: 24px; /* Adjust font size */
+}
+
+.navbar:hover {
+    background-color: #555; /* Darker background color when hovering */
+}
+
+.navbar-link {
+    text-decoration: none; /* Remove underline from link */
+    color: white; /* Ensure the text color is white */
+}
+
+.navbar-link:hover {
+    color: #ddd; /* Slight color change on hover for the text */
+}
