@@ -35,6 +35,22 @@ function Homepage() {
                 <h2>Flights On Ground</h2>
                 <p>Check out flights currently at the gate or taxiing.</p>
             </Link>
+            <Link to="/views/alternative-airports" className="card">
+                <h2>Alternative Airports</h2>
+                <p>Check out alternative airports.</p>
+            </Link>
+            <Link to="/views/people-in-air" className="card">
+                <h2>People In Air</h2>
+                <p>Check out the people who are currently in the air.</p>
+            </Link>
+            <Link to="/views/people-on-ground" className="card">
+                <h2>People On Ground</h2>
+                <p>Check out the people who are currently on the ground.</p>
+            </Link>
+            <Link to="/views/route_summary" className="card">
+                <h2>Route Summary</h2>
+                <p>Check out some routes.</p>
+            </Link>
         </div>
         </div>
     );

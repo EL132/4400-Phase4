@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './styles/flightsInAir.css';
+import './styles/views.css';
 
 function FlightsInAir() {
     const [flightsData, setFlightsData] = useState([]);
@@ -38,9 +38,9 @@ function FlightsInAir() {
     }
 
     return (
-        <div className="flights-container">
+        <div className="views-table-container">
             <h1>Flights in the Air</h1>
-            <table className="flights-table">
+            <table className="views-table">
                 <thead>
                     <tr>
                         <th>Departing From</th>
