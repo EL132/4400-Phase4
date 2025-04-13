@@ -35,6 +35,7 @@ router.get('/people_in_the_air', async (req, res) => {
     }
 });
 
+
 // 4
 router.get('/people_on_the_ground', async (req, res) => {
     try {

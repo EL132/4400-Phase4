@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './styles/addAirplane.css';
+import './styles/proc.css';
 
 function AddAirplane() {
     const [formData, setFormData] = useState({
@@ -62,9 +62,9 @@ function AddAirplane() {
     };
 
     return (
-        <div className="add-airplane-container">
+        <div className="proc-form-container">
             <h1>Add a New Airplane</h1>
-            <form onSubmit={handleSubmit} className="add-airplane-form">
+            <form onSubmit={handleSubmit} className="proc-form">
                 <label>
                     Airline ID:
                     <input type="text" name="ip_airlineID" value={formData.ip_airlineID} onChange={handleChange} required />
@@ -143,8 +143,8 @@ function AddAirplane() {
                 <button type="submit">Submit</button>
             </form>
 
-            {status && (
-                <div className={`submit-message ${status}`}>
+            {message && (
+                <div className={status === 'success' ? 'success-message' : 'error-message'}>
                     {message}
                 </div>
             )}

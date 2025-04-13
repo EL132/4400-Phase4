@@ -20,7 +20,61 @@ function Homepage() {
                     <h2>Add Airport</h2>
                     <p>Add an airport to the database.</p>
             </Link>
-            {/* etc etc someone else please add the rest of these */}
+            
+            <Link to="/procedures/add-person" className="card">
+                <h2>Add Person</h2>
+                <p>Add a person to the database.</p>
+            </Link>
+
+            <Link to="/procedures/grant-or-revoke" className="card">
+                <h2>Grant/Revoke Pilot License</h2>
+                <p>Grant or revoke a pilot's license.</p>
+            </Link>
+
+            <Link to="/procedures/offer-flight" className="card">
+                <h2>Offer Flight</h2>
+                <p>Offer a flight to a passenger.</p>
+            </Link>
+
+            <Link to="/procedures/flight-landing" className="card">
+                <h2>Flight Landing</h2>
+                <p>Handle the landing of a flight.</p>
+            </Link>
+
+            <Link to="/procedures/flight-takeoff" className="card">
+                <h2>Flight Takeoff</h2>
+                <p>Handle the takeoff of a flight.</p>
+            </Link>
+
+            <Link to="/procedures/passengers-board" className="card">
+                <h2>Passengers Board</h2>
+                <p>Handle the boarding process for passengers.</p>
+            </Link>
+
+            <Link to="/procedures/passengers-disembark" className="card">
+                <h2>Passengers Disembark</h2>
+                <p>Handle the disembarking process for passengers.</p>
+            </Link>
+
+            <Link to="/procedures/assign-pilot" className="card">
+                <h2>Assign Pilot</h2>
+                <p>Assign a pilot to a flight.</p>
+            </Link>
+
+            <Link to="/procedures/recycle-crew" className="card">
+                <h2>Recycle Crew</h2>
+                <p>Reassign crew for a flight.</p>
+            </Link>
+
+            <Link to="/procedures/retire-flight" className="card">
+                <h2>Retire Flight</h2>
+                <p>Retire a flight from service.</p>
+            </Link>
+
+            <Link to="/procedures/simulation-cycle" className="card">
+                <h2>Simulation Cycle</h2>
+                <p>Run a simulation cycle to process events.</p>
+            </Link>
         </div>
         
 
