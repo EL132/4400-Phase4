@@ -19,7 +19,7 @@ function SimulationCycle() {
                 setMessage(data.message || 'Simulation cycle completed successfully!');
             } else {
                 setStatus('error');
-                setMessage(data.message || 'An error occurred during the simulation cycle.');
+                setMessage(data.error || 'An error occurred during the simulation cycle.');
             }
         } catch (error) {
             setStatus('error');

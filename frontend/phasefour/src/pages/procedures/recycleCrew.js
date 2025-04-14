@@ -31,7 +31,7 @@ function RecycleCrew() {
                 setMessage(data.message || 'Crew recycled successfully!');
             } else {
                 setStatus('error');
-                setMessage(data.message || 'An error occurred.');
+                setMessage(data.error || 'An error occurred.');
             }
         } catch (error) {
             setStatus('error');

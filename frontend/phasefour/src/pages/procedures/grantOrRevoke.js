@@ -32,7 +32,7 @@ function GrantOrRevoke() {
                 setMessage(data.message || 'License status updated successfully!');
             } else {
                 setStatus('error');
-                setMessage(data.message || 'An error occurred.');
+                setMessage(data.error || 'An error occurred.');
             }
         } catch (error) {
             setStatus('error');

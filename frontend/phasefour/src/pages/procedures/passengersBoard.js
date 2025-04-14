@@ -31,7 +31,7 @@ function PassengersBoard() {
                 setMessage(data.message || 'Passengers boarded successfully!');
             } else {
                 setStatus('error');
-                setMessage(data.message || 'An error occurred.');
+                setMessage(data.error || 'An error occurred.');
             }
         } catch (error) {
             setStatus('error');

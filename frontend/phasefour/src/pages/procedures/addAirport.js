@@ -43,7 +43,7 @@ function AddAirport() {
                     ip_locationID: ''
                 });
             } else {
-                setMessage(result.message || 'Failed to add airport.');
+                setMessage(result.error || 'Failed to add airport.');
                 setStatus('error');
             }
         } catch (error) {

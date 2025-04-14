@@ -49,7 +49,9 @@ function AddAirplane() {
             const data = await response.json();
 
             if (response.ok) {
+                
                 setStatus('success');
+                console.log(data);
                 setMessage(data.message || 'Airplane added successfully.');
             } else {
                 setStatus('error');

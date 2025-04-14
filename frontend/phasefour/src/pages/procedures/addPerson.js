@@ -3,14 +3,14 @@ import './styles/proc.css';
 
 function AddPerson() {
     const [formData, setFormData] = useState({
-        ip_personID: '',
-        ip_first_name: '',
-        ip_last_name: '',
-        ip_locationID: '',
-        ip_taxID: '',
-        ip_experience: '',
-        ip_miles: '',
-        ip_funds: ''
+        ip_personID: null,
+        ip_first_name: null,
+        ip_last_name: null,
+        ip_locationID: null,
+        ip_taxID: null,
+        ip_experience: null,
+        ip_miles: null,
+        ip_funds: null
     });
 
     const [message, setMessage] = useState('');
@@ -38,7 +38,7 @@ function AddPerson() {
                 setMessage(data.message || 'Person added successfully!');
             } else {
                 setStatus('error');
-                setMessage(data.message || 'An error occurred while adding the person.');
+                setMessage(data.error || 'An error occurred while adding the person.');
             }
         } catch (err) {
             setStatus('error');

@@ -31,7 +31,7 @@ function FlightTakeoff() {
                 setMessage(data.message || 'Flight takeoff processed successfully!');
             } else {
                 setStatus('error');
-                setMessage(data.message || 'An error occurred.');
+                setMessage(data.error || 'An error occurred.');
             }
         } catch (error) {
             setStatus('error');

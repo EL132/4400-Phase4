@@ -31,7 +31,7 @@ function FlightLanding() {
                 setMessage(data.message || 'Flight landing processed successfully!');
             } else {
                 setStatus('error');
-                setMessage(data.message || 'An error occurred.');
+                setMessage(data.error || 'An error occurred.');
             }
         } catch (error) {
             setStatus('error');
