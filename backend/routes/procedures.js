@@ -307,8 +307,8 @@ router.post('/passengers_board', async (req, res) => {
 
         const [flightInfoRows] = await db.query(
             `SELECT progress, routeID, cost, support_tail 
-             FROM flight 
-             WHERE flightID = ? AND airplane_status = 'on_ground'`,
+            FROM flight 
+            WHERE flightID = ? AND airplane_status = 'on_ground'`,
             [ip_flightID]
         );
 
@@ -319,7 +319,7 @@ router.post('/passengers_board', async (req, res) => {
 
         const { progress, routeID, cost, support_tail } = flightInfo;
 
-        // Step 2: Check that the flight has another leg
+        // check that the flight has another leg
         const [finalLegRows] = await db.query(
             `SELECT MAX(sequence) AS final_leg FROM route_path WHERE routeID = ?`,
             [routeID]
@@ -329,7 +329,7 @@ router.post('/passengers_board', async (req, res) => {
             return res.status(400).json({ error: 'Flight has completed all legs.' });
         }
 
-        // Step 3: Get departure and arrival airports of the next leg
+        // get departure and arrival airports of the next leg
         const [legInfoRows] = await db.query(
             `SELECT leg.departure, leg.arrival 
              FROM route_path 
@@ -339,7 +339,7 @@ router.post('/passengers_board', async (req, res) => {
         );
         const { departure: departure_airport, arrival: arrival_airport } = legInfoRows[0];
 
-        // Step 4: Get airplane location and seat capacity
+        // get airplane location and seat capacity
         const [airplaneRows] = await db.query(
             `SELECT locationID 
              FROM airplane 
@@ -352,17 +352,17 @@ router.post('/passengers_board', async (req, res) => {
         }
         const {locationID: airplane_location } = airplane;
 
-        // Step 5: Find all eligible boarding passengers (matches stored procedure conditions)
+        // find all eligible boarding passengers (matches stored procedure conditions)
         const [boardingPassengers] = await db.query(
             `SELECT DISTINCT pa.personID, pe.first_name, pe.last_name, pa.funds
-             FROM passenger pa
-             JOIN person pe ON pa.personID = pe.personID
-             JOIN airport a ON pe.locationID = a.locationID
-             JOIN passenger_vacations pv ON pv.personID = pa.personID
-             WHERE a.airportID = ?
-               AND pv.sequence = 1
-               AND pv.airportID = ?
-               AND pa.funds >= ?`,
+            FROM passenger pa
+            JOIN person pe ON pa.personID = pe.personID
+            JOIN airport a ON pe.locationID = a.locationID
+            JOIN passenger_vacations pv ON pv.personID = pa.personID
+            WHERE a.airportID = ?
+            AND pv.sequence = 1
+            AND pv.airportID = ?
+            AND pa.funds >= ?`,
             [departure_airport, arrival_airport, cost]
         );
 
@@ -401,8 +401,8 @@ router.post('/passengers_disembark', async (req, res) => {
     try {
         const [flightRows] = await db.query(
             `SELECT support_tail, progress, routeID
-             FROM flight
-             WHERE flightID = ? AND airplane_status = 'on_ground'`,
+            FROM flight
+            WHERE flightID = ? AND airplane_status = 'on_ground'`,
             [ip_flightID]
         );
 
@@ -413,12 +413,12 @@ router.post('/passengers_disembark', async (req, res) => {
 
         const { support_tail: flight_tail, progress: current_progress, routeID: flight_route } = flight;
 
-        // Step 2: Get the current arrival airport (where passengers would disembark)
+        // get the current arrival airport (where passengers would disembark)
         const [arrivalRows] = await db.query(
             `SELECT leg.arrival AS destination_airport
-             FROM route_path
-             JOIN leg ON route_path.legID = leg.legID
-             WHERE routeID = ? AND sequence = ?`,
+            FROM route_path
+            JOIN leg ON route_path.legID = leg.legID
+            WHERE routeID = ? AND sequence = ?`,
             [flight_route, current_progress]
         );
         const destination_airport = arrivalRows[0]?.destination_airport;
@@ -426,11 +426,11 @@ router.post('/passengers_disembark', async (req, res) => {
             return res.status(400).json({ error: 'Could not determine destination airport.' });
         }
 
-        // Step 3: Get the locationID for the arrival airport (airplane will be located here)
+        // get the locationID for the arrival airport (airplane will be located here)
         const [airportRows] = await db.query(
             `SELECT locationID
-             FROM airport
-             WHERE airportID = ?`,
+            FROM airport
+            WHERE airportID = ?`,
             [destination_airport]
         );
         const airport_location = airportRows[0]?.locationID;
@@ -438,16 +438,16 @@ router.post('/passengers_disembark', async (req, res) => {
             return res.status(400).json({ error: 'Arrival airport location not found.' });
         }
 
-        // Step 4: Find disembarking passengers based on matching logic in stored procedure
+        // find disembarking passengers based on matching logic in stored procedure
         const [disembarkingPassengers] = await db.query(
             `SELECT DISTINCT pa.personID, pe.first_name, pe.last_name
-             FROM passenger pa
-             JOIN person pe ON pa.personID = pe.personID
-             JOIN airplane a ON a.locationID = pe.locationID
-             JOIN passenger_vacations pv ON pv.personID = pe.personID
-             WHERE a.tail_num = ?
-               AND pv.sequence = 1
-               AND pv.airportID = ?`,
+            FROM passenger pa
+            JOIN person pe ON pa.personID = pe.personID
+            JOIN airplane a ON a.locationID = pe.locationID
+            JOIN passenger_vacations pv ON pv.personID = pe.personID
+            WHERE a.tail_num = ?
+            AND pv.sequence = 1
+            AND pv.airportID = ?`,
             [flight_tail, destination_airport]
         );
 
