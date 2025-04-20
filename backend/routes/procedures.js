@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db'); 
+const db = require('../db');
 
 // 1
 router.post('/add_airplane', async (req, res) => {
@@ -19,23 +19,33 @@ router.post('/add_airplane', async (req, res) => {
     try {
         // Call the stored procedure with parameters
         const [result] = await db.query(
-        `CALL add_airplane(?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [
-            ip_airlineID,
-            ip_tail_num,
-            ip_seat_capacity,
-            ip_speed,
-            ip_locationID,
-            ip_plane_type,
-            ip_maintenanced,
-            ip_model,
-            ip_neo
-        ]
+            `CALL add_airplane(?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [
+                ip_airlineID,
+                ip_tail_num,
+                ip_seat_capacity,
+                ip_speed,
+                ip_locationID,
+                ip_plane_type,
+                ip_maintenanced,
+                ip_model,
+                ip_neo
+            ]
         );
-        
+
         const [checkResult] = await db.query(
-            `SELECT * FROM airplane WHERE tail_num = ?`,
-            [ip_tail_num]
+            `SELECT * FROM airplane WHERE tail_num = ? and airlineID = ? and seat_capacity = ? and speed = ? and locationID = ? and plane_type = ? and maintenanced = ? and model = ? and neo = ?`,
+            [
+                ip_tail_num,
+                ip_airlineID,
+                ip_seat_capacity,
+                ip_speed,
+                ip_locationID,
+                ip_plane_type,
+                ip_maintenanced,
+                ip_model,
+                ip_neo
+            ]
         );
         if (checkResult.length === 0) {
             return res.status(404).json({ error: 'Airplane not found after addition' });
@@ -70,7 +80,7 @@ router.post('/add_airport', async (req, res) => {
                 ip_locationID
             ]
         );
-        
+
         const [checkResult] = await db.query(
             `SELECT * FROM airport WHERE airportID = ?`,
             [ip_airportID]
@@ -114,10 +124,15 @@ router.post('/add_person', async (req, res) => {
             ]
         );
         console.log(result);
-        
+
         const [checkResult] = await db.query(
-            `SELECT * FROM person WHERE personID = ?`,
-            [ip_personID]
+            `SELECT * FROM person WHERE personID = ? and first_name = ? and last_name = ? and locationID = ?`,
+            [
+                ip_personID,
+                ip_first_name,
+                ip_last_name,
+                ip_locationID,
+            ]
         );
 
         if (checkResult.length === 0) {
@@ -125,7 +140,7 @@ router.post('/add_person', async (req, res) => {
         }
 
         if (ip_miles == null || ip_funds == null) {
-            const [checkResult2] = await db.query( 
+            const [checkResult2] = await db.query(
                 `SELECT * FROM pilot WHERE personID = ?`,
                 [ip_personID]
             );
@@ -157,12 +172,12 @@ router.post('/grant_or_revoke_pilot_license', async (req, res) => {
         const [before] = await db.query(
             `SELECT * FROM pilot_licenses WHERE personID = ? and license = ?`,
             [ip_personID, ip_license]
-        ); 
+        );
         // Make an empty variable called exists
         const exists = before.length > 0;
 
         if (before.length === 0) {
-            
+
         }
         const [result] = await db.query(
             `CALL grant_or_revoke_pilot_license(?, ?)`,
@@ -216,8 +231,16 @@ router.post('/offer_flight', async (req, res) => {
         );
 
         const [checkResult] = await db.query(
-            `SELECT * FROM flight WHERE flightID = ?`,
-            [ip_flightID]
+            `SELECT * FROM flight WHERE flightID = ? and routeID = ? and support_airline = ? and support_tail = ? and progress = ? and next_time = ? and cost = ?`,
+            [
+                ip_flightID,
+                ip_routeID,
+                ip_support_airline,
+                ip_support_tail,
+                ip_progress,
+                ip_next_time,
+                ip_cost
+            ]
         );
         if (checkResult.length === 0) {
             return res.status(404).json({ error: 'Flight not found after offering' });
@@ -260,7 +283,7 @@ router.post('/flight_landing', async (req, res) => {
             }
         }
 
-        if (afterFlight[0].airplane_status !== 'on_ground' ) {
+        if (afterFlight[0].airplane_status !== 'on_ground') {
             return res.status(404).json({ error: 'Flight status not updated after landing' });
         }
 
@@ -350,7 +373,7 @@ router.post('/passengers_board', async (req, res) => {
         if (!airplane) {
             return res.status(400).json({ error: 'Airplane not found for the flight.' });
         }
-        const {locationID: airplane_location } = airplane;
+        const { locationID: airplane_location } = airplane;
 
         // find all eligible boarding passengers (matches stored procedure conditions)
         const [boardingPassengers] = await db.query(
@@ -490,7 +513,7 @@ router.post('/assign_pilot', async (req, res) => {
         if (checkPilot[0].commanding_flight !== ip_flightID) {
             return res.status(404).json({ error: 'Pilot not assigned to flight' });
         }
-        
+
         res.json({ message: 'assign_pilot() called successfully..', result });
     } catch (error) {
         console.error('Error in assign_pilot:', error);
